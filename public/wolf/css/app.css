@@ -1,0 +1,568 @@
+/* ============================================================
+ * Author
+ * -------------------------------------------------------------
+ * Bernhard Wilson
+ * bernhard.wilson@wolframium.net
+ *
+ * =============================================================
+ * Project
+ * -------------------------------------------------------------
+ * Wolf-Admin
+ * Administration interface
+ *
+ * =============================================================
+ * Copyright 2019 B.Wilson
+ * -------------------------------------------------------------
+ * Released under the MIT license
+ * https://wolframium.net
+ *
+ */
+
+.wolframium {
+    display: none;
+    position: fixed;
+    width: 200px;
+    height: 24px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 300;
+    text-transform: uppercase;
+    line-height: 24px;
+    top: calc(100% - 100px);
+    left: -88px;
+    z-index: 9999;
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+.wolframium a {
+    color: #fffa;
+}
+.wolframium a:hover {
+    color: #ffff;
+}
+
+
+
+/* ============================================================
+ * Basic
+ * ------------------------------------------------------------
+ * Базовые основные стили страницы, некоторых элементов,
+ * разметка кейса и контейнера.
+ * 
+ */
+
+
+/*a {
+    position: relative;
+    text-decoration: none;
+    background: transparent;
+    cursor: pointer;
+    transition: all .3s ease;
+}
+a:hover {
+    text-decoration: none;
+}
+
+a img {
+    display: block;
+    vertical-align: middle;
+}
+
+img, svg {
+    max-width: 100%;
+}
+
+img {
+    border: 0;
+}*/
+
+.app {
+    position: relative;
+    /*font-size: 16px;*/
+}
+
+.case {
+    position: relative;
+    max-width: 100rem;
+    margin: 0 auto;
+    padding: 0 5.5%;
+}
+
+.contain {
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.app .case {
+    overflow: hidden;
+    padding: 0 5.5% 0 6rem;
+}
+
+.app .case .contain {
+    padding: 0;
+}
+
+
+
+/* ============================================================
+ * Sidebar
+ * ------------------------------------------------------------
+ * Адаптивный сайдбар. Сделан хорошо, но в дальнейшем
+ * желательно чуток переписать. Что-то не нравится мне в нём.
+ * 
+ */
+
+.app .sidebar {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: fixed;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    width: 4rem;
+    height: 100%;
+    background: #1a1a1a;
+    /*background: linear-gradient(0deg,#fff,#f5f5fa);*/
+    transition: width .4s ease;
+}
+
+.app .sidebar .logo {
+    display: flex;
+    position: relative;
+    background: #eee;
+}
+
+.app .sidebar .logo .mark {
+    transition: margin .3s ease;
+    width: 50px;
+    background-color: transparent;
+}
+
+.app.nav--on .sidebar .logo .mark {
+    margin-right: 1rem;
+    transition: margin .3s ease .1s;
+}
+
+.app .sidebar .logo .type {
+    font-size: 1.6rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-align: center;
+    color: #1a1a1a;
+    opacity: 0;
+    width: 0;
+    transition: opacity .2s ease,width .2s ease .1s;
+}
+.app .sidebar .logo:hover {
+    text-decoration: none;
+}
+
+.app.nav--on .sidebar .logo .type {
+    opacity: 1;
+    width: 7.0625rem;
+    line-height: 1.8;
+    transition: opacity .3s ease .2s,width .3s ease;
+}
+
+.app .sidebar nav {
+    flex: 1;
+    padding: 0 1rem;
+    width: 15rem;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 10px;
+}
+
+.app .sidebar nav::-webkit-scrollbar {
+    width: 4px;
+}
+.app .sidebar nav::-webkit-scrollbar-track {
+    padding: 2px;
+    -webkit-box-shadow: inset 0 0 0 rgba(0,0,0,0);
+}
+.app .sidebar nav::-webkit-scrollbar-thumb {
+  background-color: #fff;
+  outline: 1px solid #0088cc;
+}
+
+.app .sidebar nav .navigation {
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+    opacity: 0;
+    overflow: hidden;
+    transition: opacity .3s ease,-webkit-transform .3s ease;
+    transition: opacity .3s ease,transform .3s ease;
+    transition: opacity .3s ease,transform .3s ease,-webkit-transform .3s ease;
+}
+
+.app .sidebar nav .navigation .items {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.app .sidebar nav .navigation .items .item {
+    display: block;
+    padding: .65rem 0;
+}
+
+.app .sidebar nav .navigation .items .item .title,
+.app .sidebar nav .navigation .items .item .link {
+    display: block;
+    font-size: .875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: #fff;
+    text-decoration: none;
+    margin: 0;
+    cursor: pointer;
+    transition: all .3s ease;
+}
+
+.app .sidebar nav .navigation .items .item .title:hover {
+    -webkit-transform: translate3d(5px,0,0);
+    transform: translate3d(5px,0,0);
+}
+
+.app .sidebar nav .navigation .items .item.sub--on > .title {
+    margin-bottom: 1rem;
+}
+
+.app .sidebar nav .navigation .items .item a {
+    display: block;
+    font-size: .875rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: #fffa;
+    text-decoration: none;
+    transition: all .3s ease;
+}
+
+.app .sidebar nav .navigation .items .item a:hover {
+    -webkit-transform: translate3d(5px,0,0);
+    transform: translate3d(5px,0,0);
+    color: #fff;
+}
+
+.app .sidebar nav .navigation .items .item .childs {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height .45s ease;
+}
+
+.app .sidebar nav .navigation .items .item.sub--on .childs {
+    max-height: none;
+}
+
+.app .sidebar nav .navigation .items .item .childs .child a {
+    position: relative;
+    padding-left: 1rem;
+    font-weight: 400;
+    line-height: 2;
+}
+
+.app .sidebar nav .navigation .items .childs .child.active a {
+    color: #fff;
+    -webkit-transform: translate3d(5px,0,0);
+    transform: translate3d(5px,0,0);
+}
+
+.app .sidebar nav .navigation .items .childs .child.active a:before {
+    content: "";
+    position: absolute;
+    top: .60rem;
+    left: 0;
+    width: .5rem;
+    height: .5rem;
+    background: url(../active_marker.svg) no-repeat 50%;
+}
+
+.app.nav--on .sidebar {
+    width: 15rem;
+}
+
+.app.nav--on .sidebar nav .navigation {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+    opacity: 1;
+    transition: opacity .5s ease,-webkit-transform .5s ease;
+    transition: opacity .5s ease,transform .5s ease;
+    transition: opacity .5s ease,transform .5s ease,-webkit-transform .5s ease;
+}
+
+.app .page {
+    padding: 1.25rem 0;
+    min-height: 100vh;
+}
+
+.trigger {
+    position: relative;
+    width: 100%;
+    height: 3rem;
+}
+
+.trigger .nav_trigger {
+    position: absolute;
+    top: 50%;
+    left: 1.25rem;
+    z-index: 9999;
+    height: .875rem;
+    width: 1.3125rem;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.trigger .nav_trigger .bar {
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    background: #fff;
+    transition: all 0ms .3s;
+}
+
+.trigger .nav_trigger .bar:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    background: #fff;
+    transition: bottom .3s cubic-bezier(.23,1,.32,1) .3s,-webkit-transform .3s cubic-bezier(.23,1,.32,1);
+    transition: bottom .3s cubic-bezier(.23,1,.32,1) .3s,transform .3s cubic-bezier(.23,1,.32,1);
+    transition: bottom .3s cubic-bezier(.23,1,.32,1) .3s,transform .3s cubic-bezier(.23,1,.32,1),-webkit-transform .3s cubic-bezier(.23,1,.32,1);
+}
+
+.trigger .nav_trigger .bar:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: -6px;
+    background: #fff;
+    transition: top .3s cubic-bezier(.23,1,.32,1) .3s,-webkit-transform .3s cubic-bezier(.23,1,.32,1);
+    transition: top .3s cubic-bezier(.23,1,.32,1) .3s,transform .3s cubic-bezier(.23,1,.32,1);
+    transition: top .3s cubic-bezier(.23,1,.32,1) .3s,transform .3s cubic-bezier(.23,1,.32,1),-webkit-transform .3s cubic-bezier(.23,1,.32,1);
+}
+
+.trigger .nav_trigger .bar,
+.trigger .nav_trigger .bar:after,
+.trigger .nav_trigger .bar:before {
+    width: 1.3125rem;
+    height: 2px;
+}
+
+.trigger .nav_trigger .bar.animate {
+    background: hsla(0,0%,100%,0);
+}
+
+.trigger .nav_trigger .bar.animate:before {
+    bottom: 0;
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    transition: bottom .3s cubic-bezier(.23,1,.32,1),-webkit-transform .3s cubic-bezier(.23,1,.32,1) .3s;
+    transition: bottom .3s cubic-bezier(.23,1,.32,1),transform .3s cubic-bezier(.23,1,.32,1) .3s;
+    transition: bottom .3s cubic-bezier(.23,1,.32,1),transform .3s cubic-bezier(.23,1,.32,1) .3s,-webkit-transform .3s cubic-bezier(.23,1,.32,1) .3s;
+}
+
+.trigger .nav_trigger .bar.animate:after {
+    top: 0;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    transition: top .3s cubic-bezier(.23,1,.32,1),-webkit-transform .3s cubic-bezier(.23,1,.32,1) .3s;
+    transition: top .3s cubic-bezier(.23,1,.32,1),transform .3s cubic-bezier(.23,1,.32,1) .3s;
+    transition: top .3s cubic-bezier(.23,1,.32,1),transform .3s cubic-bezier(.23,1,.32,1) .3s,-webkit-transform .3s cubic-bezier(.23,1,.32,1) .3s;
+}
+
+
+
+/* ============================================================
+ * Session Message
+ * ------------------------------------------------------------
+ * Сообщения сессии которые выводятся вверху над контейнером.
+ * 
+ */
+
+.session {
+    display: block;
+    width: 100%;
+    background: #0088cc;
+    color: #ffffff;
+    height: 2rem;
+    margin-top: -2rem;
+    z-index: 999;
+    transition: margin-top 0.3s;
+}
+.session.active {
+    margin-top: 0;
+}
+.session .case .contain {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.session .message {
+    padding: 0.5rem 0;
+    font-size: 0.8rem;
+    font-weight: 600;
+    line-height: 1rem;
+}
+.session .close {
+    display: block;
+    width: 2rem;
+    height: 2rem;
+    font-size: 0.6rem;
+    font-weight: 700;
+    line-height: 2rem;
+    text-align: center;
+}
+.session .close:hover {
+    color: #ccc;
+    cursor: pointer;
+    background: rgba(0,0,0,0.2);
+}
+
+
+
+
+
+
+
+/* ============================================================
+ * Media
+ * ------------------------------------------------------------
+ * В основном относящиеся к контейнеру и сайдбару.
+ * 
+ */
+
+@media (min-height: 25rem) {
+    .app .sidebar .logo {
+        padding: 1.5rem 0.4rem;
+    }
+
+    .app .page {
+        padding-top: 1.75rem;
+    }
+}
+
+@media (min-height: 25rem) and (min-width: 65rem) {
+    .app .sidebar .logo {
+        padding: 1.5rem 0;
+    }
+}
+
+@media (min-width: 35rem) {
+    .contain {
+        padding: 0 2rem;
+    }
+}
+
+@media (min-width: 40rem) {
+    .app .case {
+        padding-left: 8.25rem;
+    }
+}
+
+@media (min-width: 65rem) {
+    .wolframium {
+        display: block;
+    }
+    .app .case {
+        overflow: visible;
+        padding: 0 5.5%;
+    }
+
+    .app .case > .contain {
+        display: flex;
+        padding: 0 2rem;
+    }
+
+    .app .sidebar {
+        overflow: visible;
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+        background: none;
+        width: 15rem;
+        height: 100vh;
+    }
+
+    .app .sidebar:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 999rem;
+        height: 100%;
+        background: #1a1a1a;
+    }
+
+    .app .sidebar .logo {
+        padding: 1rem 0;
+        flex-direction: column;
+        justify-content: center;
+        width: 13rem;
+        height: 13rem;
+        align-items: center;
+        margin: 2rem 2rem 2rem 0;
+        border-radius: 500rem;
+    }
+
+    .app .sidebar .logo .mark {
+        width: 6rem;
+    }
+
+    .app .sidebar .logo .type {
+        opacity: 1;
+        width: 14rem;
+    }
+
+    .app .page {
+        flex: 1;
+        min-width: 0;
+        padding-left: 4.25rem;
+    }
+
+    .app .sidebar nav {
+        padding: 0;
+    }
+
+    .app .sidebar nav, .app .sidebar nav .navigation {
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    .trigger {
+        display: none;
+    }
+}
+
+
+
+
+
+ion-icon {
+  font-size: 16px;
+}
+.btn-icon .btn {
+    line-height: 16px;
+}
+
+.component-header {
+    margin: 0 0 4rem;
+}
+.component {
+    position: relative;
+}
+.component + .component {
+    margin-top: 1rem;
+}
+.component pre {
+    background: #eee;
+    padding: 0.5rem;
+}
