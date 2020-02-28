@@ -27,7 +27,7 @@ Route::middleware('auth')->prefix('/admin')->namespace('Admin')->name('admin.')-
 
 });
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@home')->name('home');
 
 Route::get('/doc', 'DocController@doc')->name('doc');
 Route::get('/doc/navbar', 'DocController@navbar')->name('doc.navbar');
